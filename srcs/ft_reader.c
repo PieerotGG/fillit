@@ -6,7 +6,7 @@
 /*   By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:46:32 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/01/03 14:30:05 by llelievr         ###   ########.fr       */
+/*   Updated: 2019/01/07 14:08:28 by llelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,5 @@ t_bool			ft_read(const char *file, t_fillit *fillit)
 		read(fd, &c, 1);
 	}
 	fillit->t_triminos_count = current_te;
-	return (current_te != 0 && check_tetri(fillit));
+	return (current_te <= 26 && current_te > 0 && check_tetri(fillit));
 }
