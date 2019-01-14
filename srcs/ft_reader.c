@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:46:32 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/01/14 14:15:54 by pguthaus         ###   ########.fr       */
+/*   Updated: 2019/01/14 16:25:00 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static uint16_t	ft_next_tetriminos(int fd)
 	}
 	if (current_line == 4 && rd_res == BUFF_SIZE)
 		return (tetriminos);
-	else if (rd_res < 5 && current_line != 0)
+	else if ((rd_res < 5 && current_line != 0) || (current_line == 0 && rd_res != 0))
 		return (0xFFFF);
 	else
 		return (0);
@@ -103,16 +103,19 @@ t_bool			ft_read(const char *file, t_fillit *fillit)
 	char		c;
 	int			current_te;
 	int			fd;
+	t_bool		next;
 	t_tetri		*t;
 
 	if ((fd = open(file, O_RDONLY)) < 0)
 		return (FALSE);
 	ft_bzero((void *)&fillit->t_triminos, sizeof(t_tetri) * 26);
 	current_te = 0;
+	next = FALSE;
 	while ((fillit->t_triminos[current_te].value = ft_next_tetriminos(fd)) != 0)
 	{
 		if (fillit->t_triminos[current_te].value == 0xFFFF)
 			return (FALSE);
+		next = FALSE;
 		t = &fillit->t_triminos[current_te];
 		organize_tetri(t);
 		t->cols = !!(t->value & 0x8888) + !!(t->value & 0x4444)
@@ -120,10 +123,13 @@ t_bool			ft_read(const char *file, t_fillit *fillit)
 		t->rows = !!(t->value & 0xF000) + !!(t->value & 0x0F00)
 			+ !!(t->value & 0x00F0) + !!(t->value & 0x000F);
 		compare(current_te++, t, fillit);
+		c = '\0';
 		read(fd, &c, 1);
-		if (c != '\n')
-			return (0);
+		if (c == '\n')
+			next = TRUE;
+		else if (c != '\0')
+			return (FALSE);
 	}
 	fillit->t_triminos_count = current_te;
-	return (current_te <= 26 && current_te > 0 && check_tetri(fillit));
+	return (next == FALSE && current_te <= 26 && current_te > 0 && check_tetri(fillit));
 }

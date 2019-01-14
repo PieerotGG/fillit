@@ -3,3 +3,4 @@ maps/
 vmaps/
 fillit
 *.o
+.cquery
