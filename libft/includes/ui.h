@@ -6,14 +6,13 @@
 /*   By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 03:08:28 by llelievr          #+#    #+#             */
-/*   Updated: 2018/12/22 03:25:59 by llelievr         ###   ########.fr       */
+/*   Updated: 2019/01/09 15:07:09 by llelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 #ifndef UI_H
 # define UI_H
+# include "libft.h"
 
 typedef struct		s_size
 {

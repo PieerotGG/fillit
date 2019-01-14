@@ -6,15 +6,13 @@
 /*   By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 03:01:52 by llelievr          #+#    #+#             */
-/*   Updated: 2018/12/22 03:07:50 by llelievr         ###   ########.fr       */
+/*   Updated: 2019/01/09 15:06:14 by llelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 #ifndef LISTS_H
 # define LISTS_H
-
+# include "libft.h"
 
 typedef struct		s_list
 {

@@ -6,7 +6,7 @@
 #    By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 14:49:27 by llelievr          #+#    #+#              #
-#    Updated: 2018/12/22 02:52:45 by llelievr         ###   ########.fr        #
+#    Updated: 2019/01/09 15:14:08 by llelievr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ include src.mk
 
 CC = gcc
 NAME =libft.a
-CFLAGS=-Wall -Werror -Wextra -I ./includes 
+CFLAGS=-Wall -Werror -Wextra -I ./includes -flto -O3 -ffast-math
 OBJ=$(addprefix $(OBJDIR),$(SRC:.c=.o))
 
 SRCDIR	=./srcs/

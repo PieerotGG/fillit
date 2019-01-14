@@ -6,14 +6,13 @@
 /*   By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 03:01:19 by llelievr          #+#    #+#             */
-/*   Updated: 2018/12/22 03:07:08 by llelievr         ###   ########.fr       */
+/*   Updated: 2019/01/09 15:06:36 by llelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 #ifndef MEMORY_H
 # define MEMORY_H
+# include "libft.h"
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);

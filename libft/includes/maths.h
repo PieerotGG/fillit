@@ -6,14 +6,13 @@
 /*   By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 03:03:33 by llelievr          #+#    #+#             */
-/*   Updated: 2018/12/22 03:09:37 by llelievr         ###   ########.fr       */
+/*   Updated: 2019/01/09 15:08:08 by llelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 #ifndef MATHS_H
 # define MATHS_H
+# include "libft.h"
 
 typedef struct		s_vec3
 {
@@ -53,8 +52,6 @@ typedef	union		u_mat4
 	float			a[4][4];
 	t_mat4_data		d;
 }					t_mat4;
-
-
 
 int					ft_abs(int n);
 float				ft_absf(float n);

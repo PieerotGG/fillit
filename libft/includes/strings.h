@@ -6,15 +6,14 @@
 /*   By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 02:58:22 by llelievr          #+#    #+#             */
-/*   Updated: 2018/12/22 03:06:48 by llelievr         ###   ########.fr       */
+/*   Updated: 2019/01/09 15:06:59 by llelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "libft.h"
 
 #ifndef STRINGS_H
 # define STRINGS_H
 # define GNL_BUFF_SIZE 4096
+# include "libft.h"
 
 typedef struct		s_buff
 {
