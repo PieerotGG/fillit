@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_reader.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:46:32 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/01/14 13:07:14 by llelievr         ###   ########.fr       */
+/*   Updated: 2019/01/14 14:15:54 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static uint16_t	ft_next_tetriminos(int fd)
 	tetriminos = 0;
 	while (current_line < 4 && (rd_res = read(fd, buff, BUFF_SIZE)) > 0)
 	{
-		if (rd_res != BUFF_SIZE || buff[rd_res - 1] != '\n')
-			return (0);
+		if (rd_res != BUFF_SIZE || buff[0] == '\n')
+			return (0xFFFF);
 		chr = 0;
 		while (chr < 4)
 		{
@@ -35,7 +35,12 @@ static uint16_t	ft_next_tetriminos(int fd)
 		}
 		current_line++;
 	}
-	return (rd_res <= 4 || current_line != 4 ? 0 : tetriminos);
+	if (current_line == 4 && rd_res == BUFF_SIZE)
+		return (tetriminos);
+	else if (rd_res < 5 && current_line != 0)
+		return (0xFFFF);
+	else
+		return (0);
 }
 
 static int		count_adjacent(t_tetri t, int index)
@@ -106,6 +111,8 @@ t_bool			ft_read(const char *file, t_fillit *fillit)
 	current_te = 0;
 	while ((fillit->t_triminos[current_te].value = ft_next_tetriminos(fd)) != 0)
 	{
+		if (fillit->t_triminos[current_te].value == 0xFFFF)
+			return (FALSE);
 		t = &fillit->t_triminos[current_te];
 		organize_tetri(t);
 		t->cols = !!(t->value & 0x8888) + !!(t->value & 0x4444)

@@ -1,0 +1,5 @@
+.vscode/
+maps/
+vmaps/
+fillit
+*.o
