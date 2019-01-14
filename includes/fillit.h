@@ -6,7 +6,7 @@
 /*   By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 17:07:46 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/01/03 14:31:17 by llelievr         ###   ########.fr       */
+/*   Updated: 2019/01/14 12:34:13 by llelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ typedef enum	e_bool
 	FALSE = 0
 }				t_bool;
 
-t_bool		ft_fillit(t_fillit *fillit);
-void		print(t_tetri *tetriminos, uint16_t size);
-void		place_bits(uint8_t *data, size_t pos, uint8_t to_place);
-int			test_bits(uint8_t *data, size_t pos, uint8_t to_test);
-t_bool		tetri_value(t_tetri tetri, int index);
-void		organize_tetri(t_tetri *tetri);
-t_bool		ft_read(const char *file, t_fillit	*fillit);
+t_bool			ft_fillit(t_fillit *fillit);
+void			print(t_tetri *tetriminos, uint16_t size);
+void			place_bits(uint8_t *data, size_t pos, uint8_t to_place);
+int				test_bits(uint8_t *data, size_t pos, uint8_t to_test);
+t_bool			tetri_value(t_tetri tetri, int index);
+void			organize_tetri(t_tetri *tetri);
+t_bool			ft_read(const char *file, t_fillit	*fillit);
 #endif

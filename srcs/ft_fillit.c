@@ -6,7 +6,7 @@
 /*   By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 18:14:27 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/01/10 17:05:22 by llelievr         ###   ########.fr       */
+/*   Updated: 2019/01/14 12:33:25 by llelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,10 @@ static int		solve(t_fillit *inst, size_t i)
 	return (0);
 }
 
-#include <stdio.h>
-
 t_bool			ft_fillit(t_fillit *fillit)
 {
 	while (fillit->grid_size * fillit->grid_size < fillit->t_triminos_count * 4)
 		fillit->grid_size++;
-	printf("%zu\n", fillit->grid_size);
 	while (!solve(fillit, 0) && fillit->grid_size <= 16)
 		fillit->grid_size++;
 	print(fillit->t_triminos, fillit->grid_size + 1);
