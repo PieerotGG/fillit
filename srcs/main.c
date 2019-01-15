@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:57:46 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/01/03 14:23:33 by llelievr         ###   ########.fr       */
+/*   Updated: 2019/01/15 12:48:07 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int				main(int argc, char **argv)
 {
 	t_fillit	fillit;
 
-	if (argc < 2)
+	if (argc != 2)
 		return (close_main("usage: ./fillit [teriminos_file]", 1));
 	if (!(ft_read(argv[1], &fillit)))
 		return (close_main("error", 1));

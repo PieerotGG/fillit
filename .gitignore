@@ -1,21 +1,15 @@
-<<<<<<< HEAD
 a.out
 *.a
 *.o
-
-
 get_files.sh
 .vscode
 test.c
 test.c.save
-=======
 .vscode/
 maps/
 vmaps/
 fillit
 *.o
-<<<<<<< HEAD
 .cquery
-=======
->>>>>>> a778c132247df2cfb89125fb74e0d1c26cd37a83
->>>>>>> 0f411b1cf72f85f18799073e52977aa32ca5a654
+vmaps/
+maps/

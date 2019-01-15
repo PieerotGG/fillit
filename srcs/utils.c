@@ -6,7 +6,7 @@
 /*   By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 14:49:35 by llelievr          #+#    #+#             */
-/*   Updated: 2019/01/03 13:54:07 by llelievr         ###   ########.fr       */
+/*   Updated: 2019/01/15 12:52:15 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,17 @@ t_bool		tetri_value(t_tetri tetri, int index)
 	return ((tetri.value >> (15 - index)) & 1);
 }
 
-void		organize_tetri(t_tetri *tetri)
+void		organize_tetri(t_tetri *t)
 {
-	while (!(tetri->value & 0x8888) || !(tetri->value & 0xF000))
+	while (!(t->value & 0x8888) || !(t->value & 0xF000))
 	{
-		if (!(tetri->value & 0xF000))
-			tetri->value <<= 4;
-		if (!(tetri->value & 0x8888))
-			tetri->value <<= 1;
+		if (!(t->value & 0xF000))
+			t->value <<= 4;
+		if (!(t->value & 0x8888))
+			t->value <<= 1;
 	}
+	t->cols = !!(t->value & 0x8888) + !!(t->value & 0x4444)
+		+ !!(t->value & 0x2222) + !!(t->value & 0x1111);
+	t->rows = !!(t->value & 0xF000) + !!(t->value & 0x0F00)
+		+ !!(t->value & 0x00F0) + !!(t->value & 0x000F);
 }

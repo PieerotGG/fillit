@@ -6,42 +6,11 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:46:32 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/01/14 16:25:00 by pguthaus         ###   ########.fr       */
+/*   Updated: 2019/01/15 12:53:03 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-static uint16_t	ft_next_tetriminos(int fd)
-{
-	uint16_t	tetriminos;
-	size_t		current_line;
-	char		buff[BUFF_SIZE];
-	int			rd_res;
-	size_t		chr;
-
-	current_line = 0;
-	tetriminos = 0;
-	while (current_line < 4 && (rd_res = read(fd, buff, BUFF_SIZE)) > 0)
-	{
-		if (rd_res != BUFF_SIZE || buff[0] == '\n')
-			return (0xFFFF);
-		chr = 0;
-		while (chr < 4)
-		{
-			tetriminos <<= 1;
-			if (buff[chr++] == '#')
-				tetriminos += 1;
-		}
-		current_line++;
-	}
-	if (current_line == 4 && rd_res == BUFF_SIZE)
-		return (tetriminos);
-	else if ((rd_res < 5 && current_line != 0) || (current_line == 0 && rd_res != 0))
-		return (0xFFFF);
-	else
-		return (0);
-}
 
 static int		count_adjacent(t_tetri t, int index)
 {
@@ -98,38 +67,61 @@ static void		compare(int current_te, t_tetri *t, t_fillit *fillit)
 			t->same = fillit->t_triminos + i;
 }
 
-t_bool			ft_read(const char *file, t_fillit *fillit)
+static uint16_t	ft_next_tetriminos(int fd, uint8_t *done)
 {
-	char		c;
-	int			current_te;
-	int			fd;
-	t_bool		next;
+	uint16_t	res;
+	uint8_t		x;
+	uint8_t		y;
+	char		buff[BUFF_SIZE];
+	int8_t		rd_res;
+
+	y = 0;
+	res = 0;
+	while (y < 4 && (rd_res = read(fd, buff, BUFF_SIZE)) > 0)
+	{
+		if (rd_res != BUFF_SIZE || buff[BUFF_SIZE - 1] != '\n')
+			return (0xFFFF);
+		x = 0;
+		while (x < 4)
+		{
+			res <<= 1;
+			if (buff[x++] == '#')
+				res += 1;
+		}
+		y++;
+	}
+	if (y == 4 && ((rd_res = read(fd, buff, 1)) == 1) && (buff[0] == '\n'))
+		return (res);
+	else if (y == 4 && rd_res == 0)
+		*done = 1;
+	else
+		return (0xFFFF);
+	return (res);
+}
+
+
+t_bool			ft_read(const char *file, t_fillit *state)
+{
+	uint8_t		current;
+	int16_t		fd;
+	uint8_t		done;
 	t_tetri		*t;
 
-	if ((fd = open(file, O_RDONLY)) < 0)
+	if ((fd = open (file, O_RDONLY)) < 0)
 		return (FALSE);
-	ft_bzero((void *)&fillit->t_triminos, sizeof(t_tetri) * 26);
-	current_te = 0;
-	next = FALSE;
-	while ((fillit->t_triminos[current_te].value = ft_next_tetriminos(fd)) != 0)
+	done = 0;
+	ft_bzero((void *)&state->t_triminos, sizeof(t_tetri) * 26);
+	current = 0;
+	while ((state->t_triminos[current].value = ft_next_tetriminos(fd, &done)) != 0)
 	{
-		if (fillit->t_triminos[current_te].value == 0xFFFF)
+		if (state->t_triminos[current].value == 0xFFFF)
 			return (FALSE);
-		next = FALSE;
-		t = &fillit->t_triminos[current_te];
+		t = &state->t_triminos[current];
 		organize_tetri(t);
-		t->cols = !!(t->value & 0x8888) + !!(t->value & 0x4444)
-			+ !!(t->value & 0x2222) + !!(t->value & 0x1111);
-		t->rows = !!(t->value & 0xF000) + !!(t->value & 0x0F00)
-			+ !!(t->value & 0x00F0) + !!(t->value & 0x000F);
-		compare(current_te++, t, fillit);
-		c = '\0';
-		read(fd, &c, 1);
-		if (c == '\n')
-			next = TRUE;
-		else if (c != '\0')
-			return (FALSE);
+		compare(current++, t, state);
+		if (done == 1)
+			break;
 	}
-	fillit->t_triminos_count = current_te;
-	return (next == FALSE && current_te <= 26 && current_te > 0 && check_tetri(fillit));
+	state->t_triminos_count = current;
+	return (current <= 26 && current > 0 && check_tetri(state));
 }
