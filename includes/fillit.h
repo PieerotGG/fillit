@@ -6,7 +6,7 @@
 /*   By: llelievr <llelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 17:07:46 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/01/14 12:34:13 by llelievr         ###   ########.fr       */
+/*   Updated: 2019/01/25 14:25:56 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <fcntl.h>
 # include <unistd.h>
 # define BUFF_SIZE 5
+
+# define TETRIMINO_ERROR 0xFFFF
+# define TETRIMINO_EMPTY 0xF00F
 
 typedef struct	s_tetri
 {

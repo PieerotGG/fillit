@@ -6,11 +6,12 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:46:32 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/01/15 12:53:03 by pguthaus         ###   ########.fr       */
+/*   Updated: 2019/01/25 14:27:58 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h>
 
 static int		count_adjacent(t_tetri t, int index)
 {
@@ -80,7 +81,7 @@ static uint16_t	ft_next_tetriminos(int fd, uint8_t *done)
 	while (y < 4 && (rd_res = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		if (rd_res != BUFF_SIZE || buff[BUFF_SIZE - 1] != '\n')
-			return (0xFFFF);
+			return (TETRIMINO_ERROR);
 		x = 0;
 		while (x < 4)
 		{
@@ -92,10 +93,12 @@ static uint16_t	ft_next_tetriminos(int fd, uint8_t *done)
 	}
 	if (y == 4 && ((rd_res = read(fd, buff, 1)) == 1) && (buff[0] == '\n'))
 		return (res);
+	else if (y == 4 && res == 0)
+		return (TETRIMINO_EMPTY);
 	else if (y == 4 && rd_res == 0)
 		*done = 1;
 	else
-		return (0xFFFF);
+		return (TETRIMINO_ERROR);
 	return (res);
 }
 
@@ -114,7 +117,7 @@ t_bool			ft_read(const char *file, t_fillit *state)
 	current = 0;
 	while ((state->t_triminos[current].value = ft_next_tetriminos(fd, &done)) != 0)
 	{
-		if (state->t_triminos[current].value == 0xFFFF)
+		if (state->t_triminos[current].value == TETRIMINO_ERROR || state->t_triminos[current].value == TETRIMINO_EMPTY)
 			return (FALSE);
 		t = &state->t_triminos[current];
 		organize_tetri(t);
